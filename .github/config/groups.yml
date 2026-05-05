@@ -1,0 +1,21 @@
+groups:
+  - name: "Tenant Admins"
+    description: "Admins for the Tenant"
+    visibility: "Private"
+    owners:
+      - userPrincipalName: "sbadmin@sbd3m0.onmicrosoft.com"
+    members:
+      - userPrincipalName: "asmith@sbd3m0.onmicrosoft.com"
+      - userPrincipalName: "sbrownlow@sbd3m0.onmicrosoft.com"
+      - userPrincipalName: "brookeb@sbd3m0.onmicrosoft.com"
+      - userPrincipalName: "lindab@sbd3m0.onmicrosoft.com"
+
+  - name: "Dev Group"
+    description: 
+    visibility: "Private"
+    owners:
+      - userPrincipalName: "sdadmin@sbd3m0.onmicrosoft.com"
+    members:
+      - userPrincipalName: "brodyb@sbd3m0.onmicrosoft.com"
+      - userPrincipalName: "brooklynb@sbd3m0.onmicrosoft.com"
+      - userPrincipalName: "brybrownlow@sbd3m0.onmicrosoft.com"
