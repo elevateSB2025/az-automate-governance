@@ -11,8 +11,11 @@ privileged_roles := {
 deny[msg] {
   some i
   assignment := input.roleAssignments[i]
-  lower(assignment.roleName) == role
-  role := privileged_roles[_]
+
+  # Bind role BEFORE using it
+  role := lower(assignment.roleName)
+  role == privileged_roles[_]
+
   lower(assignment.principalType) != "group"
 
   msg := sprintf(
