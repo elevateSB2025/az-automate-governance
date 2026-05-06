@@ -8,7 +8,7 @@ def load_yaml(path):
 
 def main():
     base = Path(__file__).resolve().parents[1]  # repo root
-    config_dir = base / "config"
+    config_dir = base / ".github" / "config"
 
     groups = load_yaml(config_dir / "groups.yml")
     roles = load_yaml(config_dir / "roles.yml")
