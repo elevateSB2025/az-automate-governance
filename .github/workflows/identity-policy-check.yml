@@ -41,8 +41,12 @@ jobs:
           sudo mv conftest /usr/local/bin/
 
       - name: Run identity governance policy checks
+        id: opa
         run: | 
-           conftest test identity_config.json -p policies/identity 
+           set +e
+           conftest test identity_config.json -p policies/identity -o json > opa_results.json
+           echo "exit_code=$?" >> $GITHUB_OUTPUT
+           set -e
 
       - name: Authenticate to Microsoft Graph
         run: | 
