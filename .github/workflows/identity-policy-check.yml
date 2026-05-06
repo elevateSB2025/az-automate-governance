@@ -1,9 +1,13 @@
 name: Identity Governance Policy Check 
 
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - main 
+  push:
+    branches:
+      - main
 
 permissions: 
   contents: read 
