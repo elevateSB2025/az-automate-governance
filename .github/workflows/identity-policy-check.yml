@@ -48,6 +48,33 @@ jobs:
            echo "exit_code=$?" >> $GITHUB_OUTPUT
            set -e
 
+      - name: Parse OPA results
+        id: parse 
+        run: | 
+          python tools/parse_opa_results.py > violations.json
+          echo "violations=$(cat violations.json)" >> $GITHUB_OUTPUT 
+
+      - name: Create or update issues for violations
+        if: steps.opa.outputs.exit_code != '0'
+        uses: prefer-evans/create-or-update-issue@v4
+        with:
+          title: "Identity GIvernance Violations Detected"
+          body: |
+             The following identity governance violations were detected:
+
+             ```json 
+             ${{ steps.parse.outputs.violations }}
+             ```
+             Please review the configuration in `.github/config` and update accordingly.
+          labels: governance, identity, violation
+
+      - name: Close issue when violations resolved
+        if: steps.opa.outputs.exit_code == '0'
+        uses: peter-evans/close-issue@v3 
+        with:
+          issue-number: 1
+          comment: "All identity governance violations have been resolved. Closing issue."
+
       - name: Authenticate to Microsoft Graph
         run: | 
           pip install msal requests 
