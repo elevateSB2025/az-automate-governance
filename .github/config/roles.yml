@@ -1,0 +1,27 @@
+roleAssignments:
+  # ❌ This should be blocked by policy: direct Global Admin to user
+  - roleName: "Global Administrator"
+    principalType: "User"
+    principal: "sbrownlow@sbd3m0.onmicrosoft.com"
+
+  - roleName: "Global Administrator"
+    principalType: "User"
+    principal: "asmith@sbd3m0.onmicrosoft.com"
+
+  - roleName: "Global Administrator"
+    principalType: "User"
+    principal: "lindabb@sbd3m0.onmicrosoft.com"
+
+  - roleName: "Global Administrator"
+    principalType: "User"
+    principal: "sbrownlow@sbd3m0.onmicrosoft.com"
+    
+  # ✅ This should be allowed: Global Admin to a group
+  - roleName: "Global Administrator"
+    principalType: "Group"
+    principal: "Tenant Admins"
+
+  # ✅ Example: Security Admin to Developers group
+  - roleName: "Security Administrator"
+    principalType: "Group"
+    principal: "Dev Group"
