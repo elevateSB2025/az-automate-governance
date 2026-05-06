@@ -1,0 +1,17 @@
+conditionalAccess:
+  baselines:
+    - name: "Admin MFA Requirement"
+      appliesTo:
+        roles:
+          - "Global Administrator"
+          - "Privileged Role Administrator"
+      requirements:
+        - "MFA"
+        - "Compliant device OR Hybrid joined"
+
+    - name: "User MFA for risky sign-ins"
+      appliesTo:
+        users: "All"
+      requirements:
+        - "MFA"
+        - "Block legacy authentication"
