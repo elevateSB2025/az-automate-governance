@@ -56,7 +56,7 @@ jobs:
 
       - name: Create or update issues for violations
         if: steps.opa.outputs.exit_code != '0'
-        uses: prefer-evans/create-or-update-issue@v4
+        uses: peter-evans/create-or-update-issue@v4
         with:
           title: "Identity GIvernance Violations Detected"
           body: |
@@ -70,7 +70,7 @@ jobs:
 
       - name: Close issue when violations resolved
         if: steps.opa.outputs.exit_code == '0'
-        uses: prefer-evans/close-issue@v3 
+        uses: peter-evans/close-issue@v3 
         with:
           issue-number: 1
           comment: "All identity governance violations have been resolved. Closing issue."
