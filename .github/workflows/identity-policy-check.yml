@@ -10,7 +10,8 @@ on:
       - main
 
 permissions: 
-  contents: read 
+  contents: read
+  issues: write
 
 jobs:
   identity-run-policy-check:
