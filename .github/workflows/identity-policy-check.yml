@@ -71,7 +71,7 @@ jobs:
 
       - name: Close issue when violations resolved
         if: steps.opa.outputs.exit_code == '0'
-        uses: peter-evans/close-issue@v3 
+        uses: peter-evans/close-issue@v3
         with:
           issue-number: 1
           comment: "All identity governance violations have been resolved. Closing issue."
