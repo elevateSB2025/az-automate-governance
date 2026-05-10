@@ -61,7 +61,7 @@ jobs:
         with:
           title: "Identity Governance Violations Detected"
           content-filepath: ./violations.json
-          issue-number: ${{ steps.find-issue.outputs.issue-number }}
+          issue-number: 3
           body: |
              The following identity governance violations were detected:
 
@@ -75,7 +75,7 @@ jobs:
         if: steps.opa.outputs.exit_code == '0'
         uses: peter-evans/close-issue@v3
         with:
-          issue-number: 1
+          issue-number: 3
           comment: "All identity governance violations have been resolved. Closing issue."
 
       - name: Authenticate to Microsoft Graph
