@@ -13,11 +13,13 @@ def main():
     groups = load_yaml(config_dir / "groups.yml")
     roles = load_yaml(config_dir / "roles.yml")
     ca    = load_yaml(config_dir / "conditional-access.yml")
+    oauth = load_yaml(config_dir / "oauth.yml")
 
     combined = {
         "groups": groups.get("groups", []),
         "roleAssignments": roles.get("roleAssignments", []),
         "conditionalAccess": ca.get("conditionalAccess", {}),
+        "oauth": oauth.get("apps", []),
     }
 
     output_path = base / "identity_config.json"
