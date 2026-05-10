@@ -1,0 +1,8 @@
+apps:
+  - displayName: "GitHub OIDC Terraform"
+    type: "confidential"
+    requiredDelegatedPermissions:
+      - "User.Read"
+    requiredApplicationPermissions:
+      - "Directory.Read.All"
+      - "Group.Read.All"
