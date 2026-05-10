@@ -57,9 +57,11 @@ jobs:
 
       - name: Create or update issues for violations
         if: steps.opa.outputs.exit_code != '0'
-        uses: peter-evans/create-or-update-issue@v4
+        uses: peter-evans/create-issue-from-file@v5
         with:
-          title: "Identity GIvernance Violations Detected"
+          title: "Identity Governance Violations Detected"
+          content-filepath: ./violations.json
+          issue-number: 1
           body: |
              The following identity governance violations were detected:
 
