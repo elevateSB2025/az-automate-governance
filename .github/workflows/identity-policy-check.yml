@@ -86,6 +86,20 @@ jobs:
           GRAPH_CLIENT_ID: ${{ secrets.GRAPH_CLIENT_ID }}
           GRAPH_TENANT_ID: ${{ secrets.GRAPH_TENANT_ID }}
           GRAPH_CLIENT_SECRET: ${{ secrets.GRAPH_CLIENT_SECRET }}
+
+      - name: Get tenant state from Microsoft Graph
+        run: | 
+          python tools/get_tenant_state.py 
+        env:
+          GRAPH_CLIENT_ID: ${{ secrets.GRAPH_CLIENT_ID }}
+          GRAPH_TENANT_ID: ${{ secrets.GRAPH_TENANT_ID }}
+          GRAPH_CLIENT_SECRET: ${{ secrets.GRAPH_CLIENT_SECRET }}
+
+      - name: Run drift detection 
+        id: drift 
+        run: | 
+          python tools/drift_engine.py > drift.output.json 
+          echo "drift=$(cat drift_output.json)" >> $GITHUB_OUTPUT 
       
 
 
