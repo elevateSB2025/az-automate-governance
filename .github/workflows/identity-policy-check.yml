@@ -156,7 +156,7 @@ jobs:
 
       - name: Create issue for low Identity Secure Score
         if: ${{ steps.identity_secure_score.outputs.score != 'null' && fromJson(steps.identity_secure_score.outputs.score) < 60 }}
-        uses: peter-evans/create-or-update-issue@v4
+        uses: peter-evans/create-issue-from-file@v5
         with:
           title: "Low Identity Secure Score Detected"
           body: |
@@ -170,7 +170,7 @@ jobs:
         if: ${{ steps.identity_secure_score.outputs.score != 'null' && fromJson(steps.identity_secure_score.outputs.score) >= 60 }}
         uses: peter-evans/close-issue@v3
         with:
-          issue-number: 2
+          issue-number: 3
           comment: "Identity Secure Score has improved above threshold. Closing issue."
 
 
