@@ -143,7 +143,37 @@ jobs:
             This is below the target threshold of 50.
             Review Secure Score recommendations in the M365 Defender portal and update controls.
           labels: governance, secure-score, security-posture
-      
+
+      - name: Get Identity Secure Score
+        id: identity_secure_score
+        run: |
+          python tools/get_identity_secure_score.py > identity_secure_score.txt
+          echo "score=$(cat identity_secure_score.txt)" >> $GITHUB_OUTPUT
+        env:
+          GRAPH_CLIENT_ID: ${{ secrets.GRAPH_CLIENT_ID }}
+          GRAPH_TENANT_ID: ${{ secrets.GRAPH_TENANT_ID }}
+          GRAPH_CLIENT_SECRET: ${{ secrets.GRAPH_CLIENT_SECRET }}
+
+      - name: Create issue for low Identity Secure Score
+        if: ${{ steps.identity_secure_score.outputs.score != 'null' && fromJson(steps.identity_secure_score.outputs.score) < 60 }}
+        uses: peter-evans/create-or-update-issue@v4
+        with:
+          title: "Low Identity Secure Score Detected"
+          body: |
+            Current Identity Secure Score: **${{ steps.identity_secure_score.outputs.score }}**
+
+            This is below the target threshold of 60.
+            Review Identity Protection, MFA, Conditional Access, and risky user policies to improve your score.
+          labels: governance, secure-score, security-posture
+
+      - name: Close Identity Secure Score issue when resolved
+        if: ${{ steps.identity_secure_score.outputs.score != 'null' && fromJson(steps.identity_secure_score.outputs.score) >= 60 }}
+        uses: peter-evans/close-issue@v3
+        with:
+          issue-number: 2
+          comment: "Identity Secure Score has improved above threshold. Closing issue."
+
+
 
 
 
