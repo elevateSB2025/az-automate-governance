@@ -1,8 +1,8 @@
 import os, msal, requests, json
 
-client_id = os.environ["643f5f54-dec0-4c9a-aa1d-e51f00410de7"]
-tenant_id = os.environ["3e0eb729-4df6-4cad-b961-a007ac64fa60"]
-client_secret = os.environ["Kqa8Q~CV46Wdp8D5vVzmlSx4YW7OtZK8t6kujcby"]
+client_id = os.environ["GRAPH_CLIENT_ID"]
+tenant_id = os.environ["GRAPH_TENANT_ID"]
+client_secret = os.environ["GRAPH_CLIENT_SECRET"]
 
 authority = f"https://login.microsoftonline.com/{tenant_id}"
 scope = ["https://graph.microsoft.com/.default"]
