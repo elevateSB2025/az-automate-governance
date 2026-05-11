@@ -109,7 +109,7 @@ jobs:
 
       - name: Create or update drift issue
         if: ${{ steps.drift_filter.outputs.drift_filtered != '[]' }}
-        uses: peter-evans/create-or-update-issue@v4
+        uses: peter-evans/create-issue-from-file@v5
         with:
           title: "Identity & OAuth Drift Detected"
           body: |
@@ -121,6 +121,28 @@ jobs:
 
             Please review and remediate.
           labels: governance, drift, identity, oauth
+
+      - name: Get Secure Score
+        id: secure_score
+        run: |
+          python tools/get_secure_score.py > secure_score.txt
+          echo "score=$(cat secure_score.txt)" >> $GITHUB_OUTPUT
+        env:
+          GRAPH_CLIENT_ID: ${{ secrets.GRAPH_CLIENT_ID }}
+          GRAPH_TENANT_ID: ${{ secrets.GRAPH_TENANT_ID }}
+          GRAPH_CLIENT_SECRET: ${{ secrets.GRAPH_CLIENT_SECRET }}
+
+      - name: Create issue for low Secure Score
+        if: ${{ steps.secure_score.outputs.score != 'null' && fromJson(steps.secure_score.outputs.score) < 50 }}
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: "Low Secure Score Detected"
+          body: |
+            Current Secure Score: **${{ steps.secure_score.outputs.score }}**
+
+            This is below the target threshold of 50.
+            Review Secure Score recommendations in the M365 Defender portal and update controls.
+          labels: governance, secure-score, security-posture
       
 
 
