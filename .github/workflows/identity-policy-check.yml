@@ -100,6 +100,27 @@ jobs:
         run: | 
           python tools/drift_engine.py > drift.output.json 
           echo "drift=$(cat drift_output.json)" >> $GITHUB_OUTPUT 
+
+      - name: Filter drift by severity
+        id: drift_filter
+        run: |
+          python tools/filter_drift.py > drift_filtered.json
+          echo "drift_filtered=$(cat drift_filtered.json)" >> $GITHUB_OUTPUT
+
+      - name: Create or update drift issue
+        if: ${{ steps.drift_filter.outputs.drift_filtered != '[]' }}
+        uses: peter-evans/create-or-update-issue@v4
+        with:
+          title: "Identity & OAuth Drift Detected"
+          body: |
+            The following drift was detected between desired state and tenant:
+
+            ```json
+            ${{ steps.drift_filter.outputs.drift_filtered }}
+            ```
+
+            Please review and remediate.
+          labels: governance, drift, identity, oauth
       
 
 
