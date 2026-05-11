@@ -10,12 +10,21 @@ scope = ["https://graph.microsoft.com/.default"]
 app = msal.ConfidentialClientApplication(
     client_id, authority=authority, client_credential=client_secret
 )
+
 token = app.acquire_token_for_client(scopes=scope)
 headers = {"Authorization": f"Bearer {token['access_token']}"}
 
-resp = requests.get("https://graph.microsoft.com/v1.0/security/secureScores?$top=1", headers=headers)
+url = "https://graph.microsoft.com/beta/reports/identitySecureScores"
+
+resp = requests.get(url, headers=headers)
 resp.raise_for_status()
+
 data = resp.json().get("value", [])
-score = data[0]["averageScore"] if data else None
+
+if not data:
+    print("null")
+    exit(0)
+
+score = data[0].get("currentScore", None)
 
 print(score if score is not None else "null")
