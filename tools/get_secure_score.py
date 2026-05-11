@@ -12,9 +12,12 @@ app = msal.ConfidentialClientApplication(
 )
 
 token = app.acquire_token_for_client(scopes=scope)
-headers = {"Authorization": f"Bearer {token['access_token']}"}
+headers = {"Authorization": f"Bearer {token['access_token']}",
+           "Content-Type": "application/json",
+           "ConsistencyLevel": "eventual"
+          }
 
-url = "https://graph.microsoft.com/beta/reports/identitySecureScores"
+url = "https://graph.microsoft.com/beta/reports/identitySecureScores?$top=1"
 
 resp = requests.get(url, headers=headers)
 resp.raise_for_status()
