@@ -147,7 +147,7 @@ jobs:
       - name: Get Identity Secure Score
         id: identity_secure_score
         run: |
-          python tools/get_identity_secure_score.py > identity_secure_score.txt
+          python tools/get_secure_score.py > identity_secure_score.txt
           echo "score=$(cat identity_secure_score.txt)" >> $GITHUB_OUTPUT
         env:
           GRAPH_CLIENT_ID: ${{ secrets.GRAPH_CLIENT_ID }}
