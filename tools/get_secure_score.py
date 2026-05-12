@@ -24,7 +24,7 @@ headers = {
 }
 
 # Theory: Beta 'reports' path is more restrictive than 'security' path
-url = "https://graph.microsoft.com/beta/reports/identitySecureScores"
+url = "https://graph.microsoft.com/v1.0/security/secureScores"
 params = {"$top": 1}
 
 try:
